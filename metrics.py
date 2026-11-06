@@ -1,6 +1,6 @@
 """
 Recomputes the headline risk statistics for BRAC Bank PLC from the raw
-price series in ../data/raw/, so the numbers in the report can be
+price series in this repository, so the numbers in the report can be
 verified independently of the spreadsheet.
 
 Outputs: annualized return, annualized volatility, skewness, kurtosis,
@@ -14,7 +14,7 @@ cover the full series; the workbook computed them over a shorter slice,
 so those two figures differ from the report by design.
 
 Usage:
-    python analysis/metrics.py
+    python metrics.py
 
 Requires: pandas, numpy, scipy
 """
@@ -26,7 +26,7 @@ import pandas as pd
 from scipy import stats
 
 TRADING_DAYS = 250
-DATA = Path(__file__).resolve().parent.parent / "data" / "raw"
+DATA = Path(__file__).resolve().parent
 
 
 def load_series() -> tuple[pd.Series, pd.DataFrame]:
