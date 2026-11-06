@@ -31,34 +31,34 @@ Built in Excel and verified in Python (pandas, NumPy, SciPy).
 
 ### 1. Price and volume behaviour
 
-![Price volume chart](figures/01-price-volume-chart.png)
+![Price volume chart](01-price-volume-chart.png)
 
 Price moved between the mid-20s and high-70s (BDT) across the period, with volume spikes clustering around large price moves — consistent with news-driven and sentiment-driven repricing rather than steady drift.
 
-![Return chart](figures/02-return-chart.png)
+![Return chart](02-return-chart.png)
 
 ### 2. Return distribution
 
-![Return distribution](figures/03-return-distribution.png)
+![Return distribution](03-return-distribution.png)
 
 Returns are sharply peaked with a long right tail: skewness of +1.42 and kurtosis of 25.61. Most daily returns cluster near zero, punctuated by rare large shocks in both directions. A normal-distribution risk model therefore understates tail risk here.
 
 <details>
 <summary>Frequency distribution table (20 bins)</summary>
 
-![Frequency table](figures/04-frequency-table.png)
+![Frequency table](04-frequency-table.png)
 
 </details>
 
 ### 3. Systematic risk — beta
 
-![Beta regression](figures/05-beta-regression.png)
+![Beta regression](05-beta-regression.png)
 
 Regressing BRAC Bank daily returns on DSEX daily returns gives **y = 1.0776x + 0.0005**, so beta ≈ 1.08. The stock moves slightly more than the market. LankaBangla Financial Portal reports a market beta of 0.96; the gap reflects a different estimation window and methodology. Both values sit close to 1, which is what theory predicts for a private commercial bank whose fortunes track domestic credit conditions.
 
 ### 4. Relative valuation — market multiplier model
 
-![Peer market multiples](figures/06-peer-market-multiples.png)
+![Peer market multiples](06-peer-market-multiples.png)
 
 Peer group: BRAC Bank PLC, Eastern Bank PLC, Dutch-Bangla Bank PLC, City Bank PLC — all subject to the same regulatory, macroeconomic and competitive conditions in Bangladesh.
 
@@ -72,32 +72,32 @@ Peer group: BRAC Bank PLC, Eastern Bank PLC, Dutch-Bangla Bank PLC, City Bank PL
 
 P/B is price-to-book and P/S is price-to-sales. BRAC Bank trades at a premium on all three multiples, supported by 41% revenue growth and 52% operating profit growth.
 
-![Intrinsic value](figures/07-intrinsic-value-pe.png)
+![Intrinsic value](07-intrinsic-value-pe.png)
 
 Industry P/E of 5.94 × EPS (earnings per share) of 7.88 → **intrinsic value of BDT 46.77 per share**.
 
 <details>
 <summary>Per-share metrics and peer comparison charts</summary>
 
-![Per-share metrics](figures/08-per-share-metrics.png)
-![P/E comparison](figures/09-pe-ratio-comparison.png)
-![ROA and ROE comparison](figures/10-roa-roe-comparison.png)
+![Per-share metrics](08-per-share-metrics.png)
+![P/E comparison](09-pe-ratio-comparison.png)
+![ROA and ROE comparison](10-roa-roe-comparison.png)
 
 </details>
 
 ### 5. Forecast and discounted valuation
 
-![Historical and projections](figures/11-historical-and-projections.png)
+![Historical and projections](11-historical-and-projections.png)
 
 Revenue, operating income, net profit, EPS and dividends are projected to 2030 off an average historical growth rate of 15.86%, with a terminal value set by the industry P/E.
 
-![Present value](figures/12-pe-present-value.png)
+![Present value](12-pe-present-value.png)
 
 Discounting the projected dividend stream and terminal value at a required return of 6.46% gives **BDT 58.07 per share** — higher than the simple multiple method, still below the market price of BDT 65.80.
 
 ### 6. Sensitivity analysis
 
-![Sensitivity matrix](figures/13-sensitivity-matrix.png)
+![Sensitivity matrix](13-sensitivity-matrix.png)
 
 Across P/E ratios of 7–12 and required returns of 4%–9%, intrinsic value spans **BDT 55.95 to BDT 75.01**. Against the market price of BDT 65.80 the stock reads as:
 
@@ -111,19 +111,14 @@ Valuation here is best read as a range, not a point estimate.
 
 ## Repository structure
 
-```
-.
-├── analysis/
-│   └── metrics.py          # Recomputes risk statistics from the raw CSVs
-├── data/
-│   ├── BRAC_Bank_Security_Analysis_Model.xlsx   # Full working model
-│   └── raw/
-│       ├── bracbank_price_volume.csv            # Daily close + volume, 2018–2025
-│       └── dsex_index.csv                       # DSEX daily close, 2018–2025
-├── figures/                # Charts and tables exported from the model
-└── report/
-    └── BRAC_Bank_Security_Analysis_Report.pdf   # Full written report
-```
+| File | Contents |
+|---|---|
+| `BRAC_Bank_Security_Analysis_Report.pdf` | Full written report |
+| `BRAC_Bank_Security_Analysis_Model.xlsx` | Complete working model, all six sheets |
+| `bracbank_price_volume.csv` | Daily close price and volume, 2018–2025 |
+| `dsex_index.csv` | DSEX daily close, 2018–2025 |
+| `metrics.py` | Recomputes the risk statistics from the CSVs |
+| `01`–`13` `.png` | Charts and tables exported from the model |
 
 ### Workbook sheets
 
@@ -142,7 +137,7 @@ Valuation here is best read as a range, not a point estimate.
 
 ```bash
 pip install pandas numpy scipy
-python analysis/metrics.py
+python metrics.py
 ```
 
 This recomputes annualized return, volatility, skewness, kurtosis and beta directly from the CSVs. Return and volatility match the workbook exactly. Beta comes out at 1.12 rather than 1.08 because the script restricts the sample to dates on which both BRAC Bank and the DSEX traded; skewness and kurtosis are higher than the reported figures because the script uses the full series while the workbook computed them over a shorter slice.
